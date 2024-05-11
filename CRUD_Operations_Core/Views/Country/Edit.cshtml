@@ -1,0 +1,45 @@
+﻿@model CRUD_Operations_Core.Models.Country
+
+
+<main class="page payment-page">
+    <section class="payment-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2>Edit Country</h2>
+
+            </div>
+
+            <form action="/country/edit/@Model.Id" method="post">
+
+                <div class="card-details ">
+                    <h3 class="title">Edit Country Details</h3>
+                    <div class="row">
+                        <div class="form-group col-sm-8">
+                            <label for="Name" class="mb-0 mt-2">Country Name</label>
+                            <input id="Name" name="Name" type="text" class="form-control" placeholder="Country Name" value="@Model.Name">
+                        </div>
+
+                        <div class="form-group col-sm-8">
+                            <label for="Code" class="mb-0 mt-2">Country Code</label>
+                            <input id="Code" name="Code" type="text" class="form-control" placeholder="Country Code" value="@Model.Code">
+                        </div>
+
+                        <div class="form-group col-sm-8">
+                            <label for="Currency" class="mb-0 mt-2">Currency</label>
+                            <input id="Currency" name="Currency" type="text" class="form-control" placeholder="Currency" value="@Model.Currency">
+                        </div>
+
+                        <div class="form-group  mt-4">
+
+                            <button type="submit" class="btn btn-success">Edit</button>
+                            <a class="btn btn-danger" href="/country/index">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+
+
