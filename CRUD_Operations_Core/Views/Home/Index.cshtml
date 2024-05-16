@@ -1,5 +1,247 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<CRUD_Operations_Core.Models.Person>
+<div style="min-height: 100vh;">
+<h1 class="h1">Person Data</h1>
+<div class="row">
+    <div class="col-10">
+        <form class="form-check-inline" action="/home/Search?PageNo=1&SortColumn=Id">
+          
+            <div class="input-group mb-3 mt-3 flex-nowrap">
+               
+                <input type="search" class="form-control" id="search" name="search" placeholder="Search" value="@ViewBag.value" />
+               
+                <button type="submit" class="btn btn-primary" style="background-color:#59aeae; border-color:#59aeae;"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+    <div class="col-2">
+        <a class="btn btn-outline-info mt-3 flex-md-row-reverse fw-bold fs-6" style="background-color:#59aeae; border-color:#59aeae; color:white; width:190px; " href="/home/create">Create</a>
+    </div>
+</div>
+
+    <table class="table" style="vertical-align:middle">
+    <thead style="background-color:#59aeae; color:white">
+            <tr>
+            <th >
+                @{
+                    if (ViewBag.Iconclass == "fa-sort-desc")
+                    {
+                                    <a href="/home/Index?SortColumn=Id&Iconclass=fa-sort-asc&PageNo=1" class="" style="text-decoration:none; color:white">ID</a>
+                        if (ViewBag.SortColumn == "Id")
+                        {
+                                                <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+                    else
+                    {
+                                        <a href="/home/Index?SortColumn=Id&Iconclass=fa-sort-desc&PageNo=1" class="" style="text-decoration:none; color:white;">ID</a>
+                        if (ViewBag.SortColumn == "Id")
+                        {
+                                                <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+
+                }
+            </th>
+            <th>
+                Photo
+             </th>
+
+            <th width="150px">
+                @{
+                    if (ViewBag.Iconclass == "fa-sort-desc")
+                    {
+                                    <a href="/home/Index?SortColumn=FirstName&Iconclass=fa-sort-asc&PageNo=1" class="" style="text-decoration:none; color:white">First Name</a>
+                        if (ViewBag.SortColumn == "FirstName")
+                        {
+                                        <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+                    else
+                    {
+                                    <a href="/home/Index?SortColumn=FirstName&Iconclass=fa-sort-desc&PageNo=1" class="" style="text-decoration:none; color:white;">First Name</a>
+                        if (ViewBag.SortColumn == "FirstName")
+                        {
+                                        <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+
+                }
+            </th>
+                <th width="150px">
+                    @{
+                        if (ViewBag.Iconclass == "fa-sort-desc")
+                        {
+                                    <a href="/home/Index?SortColumn=LastName&Iconclass=fa-sort-asc&PageNo=1" class="" style="text-decoration:none; color:white">Last Name</a>
+                            if (ViewBag.SortColumn == "LastName")
+                            {
+                                        <i class="fa @ViewBag.Iconclass"></i>
+                            }
+                        }
+                        else
+                        {
+                                    <a href="/home/Index?SortColumn=LastName&Iconclass=fa-sort-desc&PageNo=1" class="" style="text-decoration:none; color:white;">Last Name</a>
+                            if (ViewBag.SortColumn == "LastName")
+                            {
+                                        <i class="fa @ViewBag.Iconclass"></i>
+                            }
+                        }
+
+                    }
+                </th>
+                <th>
+                    @{
+                        if (ViewBag.Iconclass == "fa-sort-desc")
+                        {
+                                    <a href="/home/Index?SortColumn=Email&Iconclass=fa-sort-asc&PageNo=1" class="" style="text-decoration:none; color:white">Email</a>
+                            if (ViewBag.SortColumn == "Email")
+                            {
+                                        <i class="fa @ViewBag.Iconclass"></i>
+                            }
+                        }
+                        else
+                        {
+                                    <a href="/home/Index?SortColumn=Email&Iconclass=fa-sort-desc&PageNo=1" class="" style="text-decoration:none; color:white;">Email</a>
+                            if (ViewBag.SortColumn == "Email")
+                            {
+                                        <i class="fa @ViewBag.Iconclass"></i>
+                            }
+                        }
+
+                    }
+                </th>
+            <th>
+                @{
+                    if (ViewBag.Iconclass == "fa-sort-desc")
+                    {
+                                    <a href="/home/Index?SortColumn=City&Iconclass=fa-sort-asc&PageNo=1" class="" style="text-decoration:none; color:white">City</a>
+                        if (ViewBag.SortColumn == "City")
+                        {
+                                        <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+                    else
+                    {
+                                    <a href="/home/Index?SortColumn=City&Iconclass=fa-sort-desc&PageNo=1" class="" style="text-decoration:none; color:white;">City</a>
+                        if (ViewBag.SortColumn == "City")
+                        {
+                                        <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+
+                }
+            </th>
+            <th>Country</th>
+                @*<th>
+                    @{
+                        if (ViewBag.Iconclass == "fa-sort-desc")
+                        {
+                            <a href="/home/Index?SortColumn=Country&Iconclass=fa-sort-asc&PageNo=1" class="" style="text-decoration:none; color:white">Country</a>
+                            if (ViewBag.SortColumn == "Country")
+                            {
+                                <i class="fa @ViewBag.Iconclass"></i>
+                            }
+                        }
+                        else
+                        {
+                            <a href="/home/Index?SortColumn=Country&Iconclass=fa-sort-desc&PageNo=1" class="" style="text-decoration:none; color:white;">Country</a>
+                            if (ViewBag.SortColumn == "Country")
+                            {
+                                <i class="fa @ViewBag.Iconclass"></i>
+                            }
+                        }
+
+                    }
+                </th>*@
+
+            <th class="align-items-center" width="350px">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var person in Model)
+        {
+                    <tr>
+                        <td>@Html.DisplayFor(temp=> person.Id)</td>
+                    <td><img src="data:image;base64,@person.PhotoUrl" alt="Not Available" width="100" height="70" style="clip-path: circle();" /></td>
+                        <td>@Html.DisplayFor(temp => person.FirstName)</td>
+                        <td>@Html.DisplayFor(temp =>person.LastName)</td>
+                    <td>@Html.DisplayFor(temp =>person.EmailId)</td>
+                    <td>@Html.DisplayFor(temp =>person.City.Name)</td>
+                    <td>@Html.DisplayFor(temp =>person.City.Country.Name)</td>
+                        
+
+                        <td>
+                    @*@Html.ActionLink("Details", "details", new { id=country.Id, controller = "Country",@class = "btn btn-information" })*@
+                    <a href="/home/details/@person.Id" class="btn btn-info" style="color:white"><i class="fa-solid fa-newspaper" style="padding-right:4px"></i>Details</a>
+                       @* </td>
+                        <td>*@
+                    @*@Html.ActionLink("Edit", "edit", new { id = country.Id, controller = "Country",@class = "btn btn-danger" })*@
+                    <a href="/home/edit/@person.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square" style="padding-right:4px"></i>Edit</a>
+                       @* </td>
+                        <td>*@
+                    @*@Html.ActionLink("Delete", "delete", new { id = country.Id, controller = "Country" , @class = "btn btn-danger"})*@
+                    <a href="/home/delete/@person.Id" class=" btn btn-danger"><i class="fa-solid fa-trash" style="padding-right:4px"></i>Delete</a>
+                        </td>
+                    </tr>
+        }
+        </tbody>
+    </table>
+</div>
+    @*Pgination Logic*@
+
+@*@{
+    int PrevPage = Convert.ToInt32(ViewBag.PageNo) - 1;
+    if (PrevPage < 0)
+    {
+        PrevPage = 1;
+    }
+
+    int NextPage = Convert.ToInt32(ViewBag.PageNo) + 1;
+    if (NextPage > ViewBag.NoOfPage)
+    {
+        NextPage = ViewBag.NoOfPage;
+    }
 }
 
 
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center ">
+        @{
+            if (ViewBag.PageNo <= 1)
+            {
+                <li class="page-item disabled"><a class="page-link" href="/Country/Index?SortColumn=@ViewBag.SortColumn&Iconclass=fa-sort-asc&PageNo=@PrevPage">Prev</a></li>
+            }
+            else
+            {
+                <li class="page-item active"><a class="page-link" href="/Country/Index?SortColumn=@ViewBag.SortColumn&Iconclass=fa-sort-asc&PageNo=@PrevPage">Prev</a></li>
+            }
+        }
+        @for (int i = 0; i < ViewBag.NoOfPage; i++)
+        {
+            if ((i + 1) == ViewBag.PageNo)
+            {
+                <li class="page-item active"><a class="page-link" href="/Country/Index?SortColumn=@ViewBag.SortColumn&Iconclass=fa-sort-asc&PageNo=@(i + 1)">@(i + 1)</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" href="/Country/Index?SortColumn=BrandID&Iconclass=fa-sort-asc&PageNo=@(i + 1)">@(i + 1)</a></li>
+            }
+        }
+        @{
+            if (ViewBag.PageNo >= ViewBag.NoOfPage)
+            {
+                <li class="page-item disabled"><a class="page-link" href="/Country/Index?SortColumn=@ViewBag.SortColumn&Iconclass=fa-sort-asc&PageNo=@NextPage">Next</a></li>
+            }
+            else
+            {
+                <li class="page-item active"><a class="page-link" href="/Country/Index?SortColumn=@ViewBag.SortColumn&Iconclass=fa-sort-asc&PageNo=@NextPage">Next</a></li>
+            }
+        }
+    </ul>
+</nav>*@
+
+    <style>
+      th,  td {                                         
+    padding: 10px;                           
+    text-align: center;
+        }
+</style>

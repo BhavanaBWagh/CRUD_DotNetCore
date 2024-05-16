@@ -54,11 +54,14 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+
+            <partial name="_CreateModalDialog"/>
+            @*@RenderSection("_CreateModalDialog", required: false)*@
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted  footer footerbtm " style="max-height:20px; margin-bottom:0px; ">
+    <footer class="border-top footer text-muted  footer footerbtm " style="max-height:20px;  margin-bottom:0px; margin-top:auto">
 
         <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom" style="border-color:#3c7782 ; background-color:aliceblue;">
     <!-- Left -->

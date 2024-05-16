@@ -1,0 +1,55 @@
+﻿@model CRUD_Operations_Core.Models.City
+
+<div style="min-height: auto;">
+<main class="page payment-page">
+    <section class="payment-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2>City Details</h2>
+
+            </div>
+
+            <form>
+
+                <div class="card-details ">
+                    <h3 class="title">City Details</h3>
+                    <div class="row">
+                        <div class="form-group col-sm-8">
+                            <label for="Name" class="mb-0 mt-2">City Name</label>
+                            <input id="Name" disabled name="Name" type="text" class="form-control" value="@Model.Name">
+                        </div>
+
+                        <div class="form-group col-sm-8">
+                            <label for="Code" class="mb-0 mt-2">City Code</label>
+                            <input id="Code" disabled name="Code" type="text" class="form-control" value="@Model.Code">
+                        </div>
+
+                        <div class="form-group col-sm-8">
+                            <label for="CountryId" class="mb-0 mt-2">Currency</label>
+
+                                @foreach (var cat in ViewBag.country)
+                                {
+                                    if (Model.CountryId == Convert.ToInt32(cat.Id))
+                                    {
+                                        <input id="CountryId" disabled name="CountryId" type="text" class="form-control" value="@cat.Name">
+                                    }
+                                }
+                        </div>
+
+                        <div class="form-group  mt-4">
+                            <a class="btn btn-secondary"  href="/city/index">Go back</a>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+</div>
+
+
+
+
+
+

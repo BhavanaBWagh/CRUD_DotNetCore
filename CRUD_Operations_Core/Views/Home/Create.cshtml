@@ -1,0 +1,170 @@
+﻿@model CRUD_Operations_Core.Models.Person
+
+
+
+<style>
+
+     .custom-file-button input[type=file] {
+      margin-left: -2px !important;
+    }
+
+    .custom-file-button input[type=file]::-webkit-file-upload-button {
+      display: none;
+    }
+
+    .custom-file-button input[type=file]::file-selector-button {
+      display: none;
+    }
+
+    .custom-file-button:hover label {
+      background-color: #dde0e3;
+      cursor: pointer;
+    }
+
+</style>
+
+<div style="min-height: auto;">
+    <main class="page payment-page">
+        <section class="payment-form dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2>Create Person</h2>
+                </div>
+
+			<form action="/home/create" method="post" enctype = "multipart/form-data">
+                    
+                    <div class="card-details ">
+                        <h3 class="title">Insert Person Details</h3>
+                        <div class="row">
+                            <div class="form-group col-sm-7">
+							<label for="FirstName" class="mb-0 mt-2">First Name</label>
+                                <input id="FirstName" name="FirstName" type="text" asp-for="FirstName" class="form-control" placeholder="First Name" value="@Model.FirstName">
+                               
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                              
+                            </div>
+
+                            <div class="form-group col-sm-5">
+                                <label for="DOB" class="mb-0 mt-2">Date Of Birth</label>
+                                <input type="date" class="form-control" id="DOB" name="DOB" asp-for="DOB" placeholder="Date Of Birth" value="@Model.DOB" />
+                                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-7">
+                                <label for="LastName" class="mb-0 mt-2">Last Name</label>
+                                <input id="LastName" name="LastName" type="text" asp-for="LastName" class="form-control" placeholder="Last Name" value="@Model.LastName">
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-5">
+
+                                <label for="gender" class="mb-0 mt-2">Gender</label><br/>
+                                <div class="form-check form-check-inline" style="padding-top:5px">
+                               
+                                    <input class="form-check-input"  type="radio" name="Gender" id="Gender" asp-for="Gender" value="Female" />
+                                    <label class="form-check-label" style="color:black; font-size:14px; font-weight:normal;text-transform: capitalize" for="Gender">Female</label>
+                                
+                                </div>
+                                <div class="form-check form-check-inline" style="padding-top:5px">
+                               
+                                    <input class="form-check-input" type="radio" name="Gender" id="Gender" asp-for="Gender" value="Male" />
+                                    <label class="form-check-label" style="color:black; font-size:14px; font-weight:normal;text-transform: capitalize" for="Gender">Male</label>
+                               
+                                </div>
+                                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-7">
+                                <label for="EmailId" class="mb-0 mt-2">Email-ID</label>
+                                <input id="EmailId" name="EmailId" type="text" class="form-control" asp-for="EmailId" placeholder="Email" value="@Model.EmailId">
+                                @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-5">
+                                <label for="Active" class="mb-0 mt-2">Status</label><br />
+                                <div style="padding-top:5px">
+                                <input class="form-check-input" type="checkbox" id="Active" data-val="true" asp-for="Active"  style="padding-right=2px" />
+                                <label class="form-check-label" style="color:black; font-size:14px; font-weight:normal;text-transform: capitalize" for="Active">Active</label>
+                                </div>
+                            </div>
+
+						<div class="form-group col-sm-7 mb-2">
+                                <label for="CountryId" class="mb-0 mt-2">Country</label>
+                                <div class="input-group">
+                                
+                                <select type="text" class="form-control" id="lstCountryId" name="CountryId" placeholder="CountryId" asp-for="CountryId" onclick="FillCities(this,'lstCity');">
+                                <option value="" selected disabled hidden>Please Select</option>
+                                @foreach (var con in ViewBag.country)
+                                {
+                                <option value="@con.Value">@con.Text</option>
+                                }
+                                </select>
+                                <button class="btn btn-success" onclick="ShowCountryCreateModal();">+</button>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+						 </div>
+
+                        	
+
+                            <div class="form-group col-sm-5">
+
+                                <label for="CityID" class="mb-0 mt-2">City</label>
+                                <div class="input-group">
+                                <select type="text" class="form-control" id="lstCity" name="CityId"  asp-for="CityId" asp-items="ViewBag.city">
+
+                                </select>
+                                    
+                                    <button class="btn btn-success" onclick="ShowCityCreateModal();">+</button>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group col-sm-12">
+                              
+                                
+               <div class="col-md-12 btn-group pb-2">
+					<div class="form-group col-3 p-0">
+						<label asp-for="ProfilePhoto" class="control-label"></label>		
+						<img id="PreviewPhoto" src="~/image/Noimg.jpg" alt="Logo Image"
+							 width="125" height="110"/>
+                                        @Html.ValidationMessageFor(model => model.PhotoUrl, "", new { @class = "text-danger" })
+					</div>
+
+                    <div class="col-1 p-0">
+                    </div>
+                    <div class="form-group col-7 p-0">
+                        <div class="input-group custom-file-button mt-5 pt-5" >
+                            <input asp-for="ProfilePhoto" type="file" class="form-control custom-file-input "  style="font-size:14px;" id="customFile">
+                            <label class="input-group-text input-group-lg form-label" style="color:black; font-size:14px;height:20px; font-weight:normal;text-transform: capitalize" for="customFile">Browse</label>                 
+					    </div>				
+                    </div>
+				</div>
+             </div>
+            
+                        
+                            <div class="form-group  mt-4">
+							<button type="submit" class="btn btn-success">Create</button>
+							<a class="btn btn-danger" href="/Home/index">Cancel</a>
+                            </div>
+
+                            <div class="form-group pt-0 mt-0">
+                                <div ID="HiddenDiv" style="visibility: hidden;">
+                                    <input asp-for="PhotoUrl" id="PhotoUrl" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+  </div>
+
+  @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    
+  }
+
+
+  

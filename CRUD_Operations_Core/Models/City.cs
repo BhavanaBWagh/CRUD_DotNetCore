@@ -16,9 +16,14 @@ namespace CRUD_Operations_Core.Models
         [MaxLength(100)]
         public string Name { get; set; }
 
+        [Required]
         [ForeignKey("CountryId")]
 
-        public int CountryId { get; set; }  
+        public int CountryId { get; set; }
+
+        [MaxLength(100)]
+        [NotMapped]
+        public string CountryName { get; set; }
 
         public virtual Country Country { get; set; }
     }

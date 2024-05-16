@@ -3,6 +3,8 @@ using CRUD_Operations_Core.Models;
 using CRUD_Operations_Core.Models.DB_Operations;
 using CRUD_Operations_Core.Data;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics.Metrics;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CRUD_Operations_Core.Controllers
 {
@@ -69,7 +71,8 @@ namespace CRUD_Operations_Core.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            List<Country> country = _countryRepository.GetCountries();
+            Country country = new Country();
+          //  List<Country> country = _countryRepository.GetCountries();
             return View(country);
         }
 
@@ -86,7 +89,7 @@ namespace CRUD_Operations_Core.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            return View("Create");
+            return View("Create",country);
         }
 
         public IActionResult Details(int id)
@@ -99,16 +102,28 @@ namespace CRUD_Operations_Core.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            List<Country> country;
-            country = _countryRepository.GetCountryDetails(id);
-            return View(country);
+            List<Country> country=null;
+           
+                country = _countryRepository.GetCountryDetails(id);
+                return View(country);
+           
+          
         }
 
         [HttpPost]
         public IActionResult Delete(Country c)
         {
-            bool result = _countryRepository.DeleteCountry(c.Id);
+            List<Country> country = null;
+            try {
+                country = _countryRepository.GetCountryDetails(c.Id);
+                bool result = _countryRepository.DeleteCountry(c.Id);
             return RedirectToAction("Index");
+             }  catch (Exception ex)
+            {
+              
+                ModelState.AddModelError("", ex.InnerException.Message);
+                return View(country);
+            }
         }
 
         [HttpGet]
@@ -128,6 +143,44 @@ namespace CRUD_Operations_Core.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Edit");
+        }
+
+        [HttpGet]
+        public IActionResult CreateModalForm()
+        {
+            Country country = new Country();
+            return PartialView("_CreateModalForm",country);
+        }
+
+        [HttpPost]
+        public IActionResult CreateModalForm(Country country)
+        {
+           _context.Add(country);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        public JsonResult GetCountries()
+        {
+            var lstCountries = new List<SelectListItem>();
+
+            List<Country> Countries = _context.Countries.ToList();
+
+            lstCountries = Countries.Select(ct => new SelectListItem()
+            {
+                Value = ct.Id.ToString(),
+                Text = ct.Name
+            }).ToList();
+
+            var defItem = new SelectListItem()
+            {
+                Value = "",
+                Text = "Please Select"
+            };
+
+            lstCountries.Insert(0, defItem);
+
+            return Json(lstCountries);
         }
 
     }

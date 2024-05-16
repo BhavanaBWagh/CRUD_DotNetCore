@@ -14,6 +14,7 @@ namespace CRUD_Operations_Core.Data
         }
 
         public virtual DbSet<City> Cities { get; set; }
-        public virtual DbSet<Country> Countries { get; set; }    
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<Person> Person { get; set; }
     }
 }

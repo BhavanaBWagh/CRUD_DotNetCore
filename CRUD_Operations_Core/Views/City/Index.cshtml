@@ -1,0 +1,199 @@
+﻿@model List<CRUD_Operations_Core.Models.City>
+<div style="min-height: 100vh;">
+<h1 class="h1">City Data</h1>
+<div class="row">
+    <div class="col-10">
+        <form class="form-check-inline" action="/city/Search?PageNo=1&SortColumn=Id">
+          
+            <div class="input-group mb-3 mt-3 flex-nowrap">
+               
+                <input type="search" class="form-control" id="search" name="search" placeholder="Search" value="@ViewBag.value" />
+               
+                <button type="submit" class="btn btn-primary" style="background-color:#59aeae; border-color:#59aeae;"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
+    </div>
+    <div class="col-2">
+        <a class="btn btn-outline-info mt-3 flex-md-row-reverse fw-bold fs-6" style="background-color:#59aeae; border-color:#59aeae; color:white; width:190px; " href="/city/create">Create</a>
+    </div>
+</div>
+
+    <table class="table">
+    <thead style="background-color:#59aeae; color:white">
+            <tr>
+            <th >
+                @{
+                    if (ViewBag.Iconclass == "fa-sort-desc")
+                    {
+                            <a href="/city/Index?SortColumn=Id&Iconclass=fa-sort-asc&PageNo=1" class="" style="text-decoration:none; color:white">City ID</a>
+                        if (ViewBag.SortColumn == "Id")
+                        {
+                                        <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+                    else
+                    {
+                                <a href="/city/Index?SortColumn=Id&Iconclass=fa-sort-desc&PageNo=1" class="" style="text-decoration:none; color:white;">City ID</a>
+                        if (ViewBag.SortColumn == "Id")
+                        {
+                                        <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+
+                }
+            </th>
+            <th>
+                @{
+                    if (ViewBag.Iconclass == "fa-sort-desc")
+                    {
+                            <a href="/city/Index?SortColumn=Code&Iconclass=fa-sort-asc&PageNo=1" class="" style="text-decoration:none; color:white">Code</a>
+                        if (ViewBag.SortColumn == "Code")
+                        {
+                                <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+                    else
+                    {
+                            <a href="/city/Index?SortColumn=Code&Iconclass=fa-sort-desc&PageNo=1" class="" style="text-decoration:none; color:white;">Code</a>
+                        if (ViewBag.SortColumn == "Code")
+                        {
+                                <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+
+                }
+            </th>
+
+            <th width="250px">
+                @{
+                    if (ViewBag.Iconclass == "fa-sort-desc")
+                    {
+                            <a href="/city/Index?SortColumn=Name&Iconclass=fa-sort-asc&PageNo=1" class="" style="text-decoration:none; color:white">Name</a>
+                        if (ViewBag.SortColumn == "Name")
+                        {
+                                <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+                    else
+                    {
+                            <a href="/city/Index?SortColumn=Name&Iconclass=fa-sort-desc&PageNo=1" class="" style="text-decoration:none; color:white;">Name</a>
+                        if (ViewBag.SortColumn == "Name")
+                        {
+                                <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+
+                }
+            </th>
+            <th>
+                @{
+                    if (ViewBag.Iconclass == "fa-sort-desc")
+                    {
+                            <a href="/city/Index?SortColumn=Country&Iconclass=fa-sort-asc&PageNo=1" class="" style="text-decoration:none; color:white">Country</a>
+                        if (ViewBag.SortColumn == "Country")
+                        {
+                                <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+                    else
+                    {
+                            <a href="/city/Index?SortColumn=Country&Iconclass=fa-sort-desc&PageNo=1" class="" style="text-decoration:none; color:white;">Country</a>
+                        if (ViewBag.SortColumn == "Country")
+                        {
+                                <i class="fa @ViewBag.Iconclass"></i>
+                        }
+                    }
+
+                }
+            </th>
+            <th class="align-items-center" width="350px">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var city in Model)
+        {
+                    <tr>
+                        <td>@Html.DisplayFor(temp=> city.Id)</td>
+                        <td>@Html.DisplayFor(temp => city.Code)</td>
+                        <td>@Html.DisplayFor(temp =>city.Name)</td>
+                     
+                      @*  <td>@ViewBag.Name</td>*@
+                        <td>@Html.DisplayFor(temp =>city.Country.Name)</td>
+                        
+
+                        <td>
+                    @*@Html.ActionLink("Details", "details", new { id=country.Id, controller = "Country",@class = "btn btn-information" })*@
+                    <a href="/city/details/@city.Id" class="btn btn-info" style="color:white"><i class="fa-solid fa-newspaper" style="padding-right:4px"></i>Details</a>
+                       @* </td>
+                        <td>*@
+                    @*@Html.ActionLink("Edit", "edit", new { id = country.Id, controller = "Country",@class = "btn btn-danger" })*@
+                    <a href="/city/edit/@city.Id" class="btn btn-primary"><i class="fa-solid fa-pen-to-square" style="padding-right:4px"></i>Edit</a>
+                       @* </td>
+                        <td>*@
+                    @*@Html.ActionLink("Delete", "delete", new { id = country.Id, controller = "Country" , @class = "btn btn-danger"})*@
+                    <a href="/city/delete/@city.Id" class=" btn btn-danger"><i class="fa-solid fa-trash" style="padding-right:4px"></i>Delete</a>
+                        </td>
+                    </tr>
+        }
+        </tbody>
+    </table>
+</div>
+    @*Pgination Logic*@
+
+@*@{
+    int PrevPage = Convert.ToInt32(ViewBag.PageNo) - 1;
+    if (PrevPage < 0)
+    {
+        PrevPage = 1;
+    }
+
+    int NextPage = Convert.ToInt32(ViewBag.PageNo) + 1;
+    if (NextPage > ViewBag.NoOfPage)
+    {
+        NextPage = ViewBag.NoOfPage;
+    }
+}
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center ">
+        @{
+            if (ViewBag.PageNo <= 1)
+            {
+                <li class="page-item disabled"><a class="page-link" href="/Country/Index?SortColumn=@ViewBag.SortColumn&Iconclass=fa-sort-asc&PageNo=@PrevPage">Prev</a></li>
+            }
+            else
+            {
+                <li class="page-item active"><a class="page-link" href="/Country/Index?SortColumn=@ViewBag.SortColumn&Iconclass=fa-sort-asc&PageNo=@PrevPage">Prev</a></li>
+            }
+        }
+        @for (int i = 0; i < ViewBag.NoOfPage; i++)
+        {
+            if ((i + 1) == ViewBag.PageNo)
+            {
+                <li class="page-item active"><a class="page-link" href="/Country/Index?SortColumn=@ViewBag.SortColumn&Iconclass=fa-sort-asc&PageNo=@(i + 1)">@(i + 1)</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" href="/Country/Index?SortColumn=BrandID&Iconclass=fa-sort-asc&PageNo=@(i + 1)">@(i + 1)</a></li>
+            }
+        }
+        @{
+            if (ViewBag.PageNo >= ViewBag.NoOfPage)
+            {
+                <li class="page-item disabled"><a class="page-link" href="/Country/Index?SortColumn=@ViewBag.SortColumn&Iconclass=fa-sort-asc&PageNo=@NextPage">Next</a></li>
+            }
+            else
+            {
+                <li class="page-item active"><a class="page-link" href="/Country/Index?SortColumn=@ViewBag.SortColumn&Iconclass=fa-sort-asc&PageNo=@NextPage">Next</a></li>
+            }
+        }
+    </ul>
+</nav>*@
+
+    <style>
+      th,  td {                                         
+    padding: 10px;                           
+    text-align: center;
+        }
+</style>

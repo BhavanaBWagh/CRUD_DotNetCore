@@ -1,0 +1,44 @@
+﻿@model CRUD_Operations_Core.Models.City
+
+<form asp-action="CreateModalForm" data-ajax="true" data-ajax-success="refreshCityList();">
+
+    <div class="card-details ">
+        <h3 class="title">Insert City Details</h3>
+        <div class="row">
+            <div class="form-group col-sm-8">
+                <label for="Name" class="mb-0 mt-2">City Name</label>
+                <input id="Name" name="Name" type="text" class="form-control" placeholder="City Name" value="@Model.Name">
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-sm-8">
+                <label for="Code" class="mb-0 mt-2">City Code</label>
+                <input id="Code" name="Code" type="text" class="form-control" placeholder="City Code" value="@Model.Code">
+                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group col-sm-8">
+
+                <label for="CountryId" class="mb-0 mt-2">Country</label>
+                <input type="hidden" asp-for="CountryId" class="form-control" />
+                <input readonly asp-for="CountryName" class="form-control" />
+                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group  mt-4" style="display:none">
+
+                <button id="btnSubmit" type="submit" class="btn btn-success">Create</button>
+               
+            </div>
+        </div>
+    </div>
+</form>
+
+  @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+  }
+
+      <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>

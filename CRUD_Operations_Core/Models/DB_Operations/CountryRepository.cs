@@ -81,7 +81,7 @@ namespace CRUD_Operations_Core.Models.DB_Operations
         public List<Country> SearchCountry(string search="")
         {
             List<Country> country;
-            return country = _context.Countries.Where(temp => temp.Name.Contains(search)).ToList();
+            return country = _context.Countries.Where(temp => temp.Name.Contains(search) || temp.Code.Contains(search)).ToList();
         }
 
         public bool CreateCountry(Country c)
@@ -108,6 +108,7 @@ namespace CRUD_Operations_Core.Models.DB_Operations
         public bool DeleteCountry(int id)
         {
             Country countryList;
+
             countryList = _context.Countries.Where(temp => temp.Id == id).FirstOrDefault();
             if(countryList != null)
             {

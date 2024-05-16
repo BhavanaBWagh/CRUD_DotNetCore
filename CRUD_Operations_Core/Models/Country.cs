@@ -4,6 +4,7 @@ namespace CRUD_Operations_Core.Models
 {
     public class Country
     {
+      
         [Key]
         public int Id { get; set; }
         [Required]
@@ -14,8 +15,10 @@ namespace CRUD_Operations_Core.Models
         [MaxLength(100)]
         public string Name { get; set; }
 
-        
+        [Required]
         [MaxLength(100)]
         public string Currency { get; set; }
+
+       
     }
 }
