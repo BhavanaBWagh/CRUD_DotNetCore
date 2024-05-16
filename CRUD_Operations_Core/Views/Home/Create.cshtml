@@ -31,7 +31,7 @@
                     <h2>Create Person</h2>
                 </div>
 
-			<form action="/home/create" method="post" enctype = "multipart/form-data">
+                <form action="/home/Create" method="post" enctype="multipart/form-data">
                     
                     <div class="card-details ">
                         <h3 class="title">Insert Person Details</h3>
@@ -127,17 +127,23 @@
 						<label asp-for="ProfilePhoto" class="control-label"></label>		
 						<img id="PreviewPhoto" src="~/image/Noimg.jpg" alt="Logo Image"
 							 width="125" height="110"/>
-                                        @Html.ValidationMessageFor(model => model.PhotoUrl, "", new { @class = "text-danger" })
+                         @Html.ValidationMessageFor(model => model.PhotoUrl, "", new { @class = "text-danger" })
 					</div>
 
                     <div class="col-1 p-0">
                     </div>
                     <div class="form-group col-7 p-0">
                         <div class="input-group custom-file-button mt-5 pt-5" >
-                            <input asp-for="ProfilePhoto" type="file" class="form-control custom-file-input "  style="font-size:14px;" id="customFile">
+                                            <input asp-for="ProfilePhoto"  class="form-control custom-file-input " style="font-size:14px;" id="customFile">
                             <label class="input-group-text input-group-lg form-label" style="color:black; font-size:14px;height:20px; font-weight:normal;text-transform: capitalize" for="customFile">Browse</label>                 
 					    </div>				
                     </div>
+                                  @*  <div class="form-group col-7 p-0">
+                                        <div class="input-group custom-file-button mt-5 pt-5">
+                                            <input asp-for="ProfilePhoto" class="form-control custom-file-input" id="customFile">
+                                            <label class="input-group-text" for="customFile">Browse</label>
+                                        </div>
+                                    </div>*@
 				</div>
              </div>
             
@@ -148,11 +154,14 @@
                             </div>
 
                             <div class="form-group pt-0 mt-0">
+                                @*<div ID="HiddenDiv" style="visibility: hidden;">
+                                    <input asp-for="PhotoUrl" id="PhotoUrl" value="" />
+                                </div>*@
                                 <div ID="HiddenDiv" style="visibility: hidden;">
                                     <input asp-for="PhotoUrl" id="PhotoUrl" value="" />
                                 </div>
-                            </div>
                         </div>
+                    </div>
                     </div>
                 </form>
             </div>
@@ -160,11 +169,20 @@
     </main>
   </div>
 
-  @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+ 
+    <script type="text/javascript">
+        $(".custom-file-input").on("change", function ()
+        {
 
-    
-  }
+            var fileName = $(this).val().split("\\").pop();
+
+            document.getElementById('PreviewPhoto').src = window.URL.createObjectURL(this.files[0]);
+
+            document.getElementById('PhotoUrl').value = fileName;
+
+        });
+    </script>
+  
 
 
   

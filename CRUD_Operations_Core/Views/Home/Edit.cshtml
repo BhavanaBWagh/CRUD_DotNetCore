@@ -156,10 +156,11 @@
                     </div>
                     <div class="form-group col-7 p-0">
                         <div class="input-group custom-file-button mt-5 pt-5" >
-                            <input asp-for="ProfilePhoto" type="file" class="form-control custom-file-input "  value="@Model.PhotoUrl" style="font-size:14px;" id="customFile">
+                            <input asp-for="ProfilePhoto" class="form-control custom-file-input "  style="font-size:14px;" id="customFile">
                             <label class="input-group-text input-group-lg form-label" style="color:black; font-size:14px;height:20px; font-weight:normal;text-transform: capitalize" for="customFile">Browse</label>                 
                         </div>				
                     </div>
+
                 </div>
              </div>
 
@@ -170,15 +171,32 @@
                             </div>
 
                             <div class="form-group pt-0 mt-0">
-                                <div ID="HiddenDiv" style="visibility: hidden;">
+                               @* <div ID="HiddenDiv" style="visibility: hidden;">
                                     <input asp-for="PhotoUrl" id="PhotoUrl"/>
+                                </div>*@
+                                <div ID="HiddenDiv" style="visibility: hidden;">
+                                    <input asp-for="PhotoUrl" id="PhotoUrl" value="" />
                                 </div>
-                            </div>
                         </div>
+                    </div>
                     </div>
                 </form>
             </div>
         </section>
     </main>
   </div>
+
+
+    <script type="text/javascript">
+        $(".custom-file-input").on("change", function () {
+
+            var fileName = $(this).val().split("\\").pop();
+
+            document.getElementById('PreviewPhoto').src = window.URL.createObjectURL(this.files[0]);
+
+            document.getElementById('PhotoUrl').value = fileName;
+
+        });
+    </script>
+  
 
