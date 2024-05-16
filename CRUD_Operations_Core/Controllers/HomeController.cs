@@ -174,6 +174,7 @@ namespace CRUD_Operations_Core.Controllers
                     }
 
                     var base64string = Convert.ToBase64String(ImgByte, 0, ImgByte.Length);
+
                     _c.PhotoUrl = base64string;
                 }
                 

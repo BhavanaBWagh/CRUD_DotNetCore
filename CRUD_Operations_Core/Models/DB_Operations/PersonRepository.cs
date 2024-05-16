@@ -217,6 +217,7 @@ namespace CRUD_Operations_Core.Models.DB_Operations
                 person.DOB = c.DOB;
                 person.Gender = c.Gender;
                 person.Active = c.Active;
+                person.PhotoUrl = c.PhotoUrl;
                 _context.SaveChanges();
                 return true;
             }
