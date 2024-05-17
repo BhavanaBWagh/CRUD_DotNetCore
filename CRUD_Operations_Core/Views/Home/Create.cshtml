@@ -119,10 +119,10 @@
                                 @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="form-group col-sm-12">
-                              
-                                
-               <div class="col-md-12 btn-group pb-2">
+
+
+            <div class="form-group col-sm-12">
+                    <div class="col-md-12 btn-group pb-2">
 					<div class="form-group col-3 p-0">
 						<label asp-for="ProfilePhoto" class="control-label"></label>		
 						<img id="PreviewPhoto" src="~/image/Noimg.jpg" alt="Logo Image"
@@ -130,20 +130,20 @@
                          @Html.ValidationMessageFor(model => model.PhotoUrl, "", new { @class = "text-danger" })
 					</div>
 
-                    <div class="col-1 p-0">
+                   <div class="col-1 p-0">
                     </div>
-                    <div class="form-group col-7 p-0">
+                    @*<div class="form-group col-7 p-0">
                         <div class="input-group custom-file-button mt-5 pt-5" >
                                             <input asp-for="ProfilePhoto"  class="form-control custom-file-input " style="font-size:14px;" id="customFile">
                             <label class="input-group-text input-group-lg form-label" style="color:black; font-size:14px;height:20px; font-weight:normal;text-transform: capitalize" for="customFile">Browse</label>                 
 					    </div>				
-                    </div>
-                                  @*  <div class="form-group col-7 p-0">
+                    </div>*@
+                                    <div class="form-group col-7 p-0">
                                         <div class="input-group custom-file-button mt-5 pt-5">
-                                            <input asp-for="ProfilePhoto" class="form-control custom-file-input" id="customFile">
+                                            <input asp-for="ProfilePhoto" class="form-control custom-file-input" id="customFile" onchange="InputFile();">
                                             <label class="input-group-text" for="customFile">Browse</label>
                                         </div>
-                                    </div>*@
+                                    </div>
 				</div>
              </div>
             
@@ -169,20 +169,17 @@
     </main>
   </div>
 
- 
-    <script type="text/javascript">
-        $(".custom-file-input").on("change", function ()
-        {
 
-            var fileName = $(this).val().split("\\").pop();
 
-            document.getElementById('PreviewPhoto').src = window.URL.createObjectURL(this.files[0]);
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
 
-            document.getElementById('PhotoUrl').value = fileName;
+   
 
-        });
-    </script>
-  
 
+    
 
   

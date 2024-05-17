@@ -55,15 +55,25 @@ function ShowCityCreateModal() {
         return;
         }
 
-        $(".custom-file-input").on("change", function () {
+$(".custom-file-input").on("change", function () {
 
-        var fileName = $(this).val().split("\\").pop();
+    var fileName = $(this).val().split("\\").pop();
 
-        document.getElementById('PreviewPhoto').src = window.URL.createObjectURL(this.files[0]);
+    document.getElementById('PreviewPhoto').src = window.URL.createObjectURL(this.files[0]);
 
-        document.getElementById('PhotoUrl').value = fileName;
+    document.getElementById('PhotoUrl').value = fileName;
 
-        });
+});
+
+//function InputFile(){
+
+//    var fileName = $(".custom-file-input").val().split("\\").pop();
+
+//    document.getElementById('PreviewPhoto').src = window.URL.createObjectURL(document.querySelector(".custom-file-input").files[0]);
+
+//    document.getElementById('PhotoUrl').value = fileName;
+//    return;
+//}
 
 
 function ShowCreateModalForm() {
@@ -71,10 +81,6 @@ function ShowCreateModalForm() {
     return;
 }
 
-//function submitModalForm() {
-//    btnSubmit = document.getElementById('dupSubmitBtn');
-//    btnSubmit.click();
-//}
 
 $(document).ready(function () {
     

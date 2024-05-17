@@ -54,7 +54,8 @@ namespace CRUD_Operations_Core.Models
 
 
         [Required(ErrorMessage = "Please choose the Customer Photo")]
-        [Column(TypeName = "varchar(MAX)"), MaxLength]
+        [Column(TypeName = "varchar(MAX)")]
+      
         public string PhotoUrl { get; set; }
 
 
