@@ -1,5 +1,6 @@
 ﻿using CRUD_Operations_Core.Models;
 using Microsoft.EntityFrameworkCore;
+using EFCore.BulkExtensions;
 
 namespace CRUD_Operations_Core.Data
 {
@@ -16,5 +17,8 @@ namespace CRUD_Operations_Core.Data
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Person> Person { get; set; }
+        public virtual DbSet<PersonDetail> PersonDetails { get; set; }
+
+        public virtual DbSet<Student> Students { get; set; }
     }
 }

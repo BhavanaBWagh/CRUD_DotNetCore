@@ -1,0 +1,39 @@
+﻿@model List<CRUD_Operations_Core.Models.Student>
+
+    <table class="table">
+    <thead style="background-color:#59aeae; color:white">
+        <tr>
+        <th>
+            Name
+        </th>
+            <th>
+                Roll
+            </th>
+            <th>
+                Age
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+                    <tr>
+                        <td>
+                        @student.Name
+                </td>
+                   <td>
+                    @student.Roll
+                   </td>
+                     <td>
+                    @student.Age
+                    </td>
+                    </tr>
+        }
+    </tbody>
+    </table>
+
+<style>
+    th, td {
+        text-align: center;
+    }
+</style>

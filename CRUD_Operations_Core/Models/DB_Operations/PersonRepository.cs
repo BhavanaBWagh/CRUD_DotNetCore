@@ -1,5 +1,6 @@
 ﻿using CRUD_Operations_Core.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace CRUD_Operations_Core.Models.DB_Operations
@@ -14,76 +15,80 @@ namespace CRUD_Operations_Core.Models.DB_Operations
          
         }
 
+
         public List<Person> GetPersons()
         {
             List<Person> personListst;
             return personListst = _context.Person.ToList();
         }
 
-        public List<Person> GetPersons(string SortColumn, string Iconclass, int PageNo)
+        public List<PersonDetail> GetPersons(string SortColumn, string Iconclass, int PageNo)
         {
             #region Sort Logic
 
-            List<Person> person = null;
+            List<PersonDetail> person = null;
 
-            if (SortColumn == "Id")
+            if (SortColumn != null)
             {
+                
                 if (Iconclass == "fa-sort-asc")
                 {
-                    person = _context.Person.OrderBy(temp => temp.Id).Include(obj => obj.City).Include(con=>con.City.Country).ToList();
+                    person = _context.PersonDetails.FromSqlRaw<PersonDetail>("GetPersonDetailsWithRowCount {0} ,{1}", SortColumn, "ASC").ToList();
                 }
                 else
                 {
-                    person = _context.Person.OrderByDescending(temp => temp.Id).Include(obj => obj.City).Include(con => con.City.Country).ToList();
-                }
-            }
-
-            if (SortColumn == "FirstName")
-            {
-                if (Iconclass == "fa-sort-asc")
-                {
-                    person = _context.Person.OrderBy(temp => temp.FirstName).Include(obj => obj.City).Include(con => con.City.Country).ToList();
-                }
-                else
-                {
-                    person = _context.Person.OrderByDescending(temp => temp.FirstName).Include(obj => obj.City).Include(con => con.City.Country).ToList();
+                    person = _context.PersonDetails.FromSqlRaw<PersonDetail>("GetPersonDetailsWithRowCount {0} ,{1}", SortColumn, "DESC").ToList();
                 }
             }
 
-            if (SortColumn == "LastName")
-            {
-                if (Iconclass == "fa-sort-asc")
-                {
-                    person = _context.Person.OrderBy(temp => temp.LastName).Include(obj => obj.City).Include(con => con.City.Country).ToList();
-                }
-                else
-                {
-                    person = _context.Person.OrderByDescending(temp => temp.LastName).Include(obj => obj.City).Include(con => con.City.Country).ToList();
-                }
-            }
+            //if (SortColumn == "FirstName")
+            //{
+            //    if (Iconclass == "fa-sort-asc")
+            //    {
+            //         person = _context.PersonDetails.FromSqlRaw<PersonDetail>("GetPersonDetailsWithRowCount {0} ,{1}", SortColumn, "ASC").ToList();
+            //    }
+            //    else
+            //    {
+            //        person = _context.PersonDetails.FromSqlRaw<PersonDetail>("GetPersonDetailsWithRowCount {0} ,{1}", SortColumn, "DESC").ToList();
+            //    }
+            //}
 
-            if (SortColumn == "Email")
-            {
-                if (Iconclass == "fa-sort-asc")
-                {
-                    person = _context.Person.OrderBy(temp => temp.EmailId).Include(obj => obj.City).Include(con => con.City.Country).ToList();
-                }
-                else
-                {
-                    person = _context.Person.OrderByDescending(temp => temp.EmailId).Include(obj => obj.City).Include(con => con.City.Country).ToList();
-                }
-            }
-            if (SortColumn == "City")
-            {
-                if (Iconclass == "fa-sort-asc")
-                {
-                    person = _context.Person.OrderBy(temp => temp.City.Name).Include(obj => obj.City).Include(con => con.City.Country).ToList();
-                }
-                else
-                {
-                    person = _context.Person.OrderByDescending(temp => temp.City.Name).Include(obj => obj.City).Include(con => con.City.Country).ToList();
-                }
-            }
+            //if (SortColumn == "LastName")
+            //{
+            //    if (Iconclass == "fa-sort-asc")
+            //    {
+            //        person = _context.PersonDetails.FromSqlRaw<PersonDetail>("GetPersonDetailsWithRowCount {0} ,{1}", SortColumn, "ASC").ToList();
+            //    }
+            //    else
+            //    {
+            //        person = _context.PersonDetails.FromSqlRaw<PersonDetail>("GetPersonDetailsWithRowCount {0} ,{1}", SortColumn, "DESC").ToList();
+            //    }
+            //}
+
+            //if (SortColumn == "Email")
+            //{
+            //    if (Iconclass == "fa-sort-asc")
+            //    {
+            //        person = _context.PersonDetails.FromSqlRaw<PersonDetail>("GetPersonDetailsWithRowCount {0} ,{1}", SortColumn, "ASC").ToList();
+            //    }
+            //    else
+            //    {
+            //        person = _context.PersonDetails.FromSqlRaw<PersonDetail>("GetPersonDetailsWithRowCount {0} ,{1}", SortColumn, "DESC").ToList();
+
+            //    }
+            //}
+            //if (SortColumn == "City")
+            //{
+            //    if (Iconclass == "fa-sort-asc")
+            //    {
+            //        person = _context.PersonDetails.FromSqlRaw<PersonDetail>("GetPersonDetailsWithRowCount {0} ,{1}", SortColumn, "ASC").ToList();
+            //    }
+            //    else
+            //    {
+            //        person = _context.PersonDetails.FromSqlRaw<PersonDetail>("GetPersonDetailsWithRowCount {0} ,{1}", SortColumn, "DESC").ToList();
+
+            //    }
+            //}
 
             return person;
 
@@ -91,17 +96,29 @@ namespace CRUD_Operations_Core.Models.DB_Operations
 
         }
 
-        public List<Person> SearchPerson(string search = "")
+        public List<PersonDetail> SearchPerson(string search = "")
         {
-            List<Person> person;
-            return person = _context.Person.Where(temp => temp.FirstName.Contains(search) || temp.LastName.Contains(search)).Include(obj => obj.City).Include(con => con.City.Country).ToList();
+            List<PersonDetail> person;
+            //return person = _context.Person.Where(temp => temp.FirstName.Contains(search) || temp.LastName.Contains(search)).Include(obj => obj.City).Include(con => con.City.Country).ToList();
+            return person = _context.PersonDetails.FromSqlRaw<PersonDetail>("SearchPersonData {0}", search).ToList();
         }
 
         public bool CreatePerson(Person p)
         {
-            _context.Person.Add(p);
-            _context.SaveChanges();
-            return true;
+          
+                //_context.Person.Add(p);
+                //_context.SaveChanges();
+                _context.Database.ExecuteSqlRaw("InsertPersonData {0},{1},{2},{3},{4},{5},{6},{7}",
+                    p.FirstName,
+                    p.LastName,
+                    p.EmailId,
+                    p.CityId,
+                    p.DOB,
+                    p.Gender,
+                    p.Active,
+                    p.PhotoUrl);
+                return true;
+            
         }
 
         public List<SelectListItem> GetCountries()
@@ -203,26 +220,43 @@ namespace CRUD_Operations_Core.Models.DB_Operations
         }
 
 
-        public bool EditPerson(Person c)
+        public bool EditPerson(Person p)
         {
             //Person person=new Person();
-            if (c != null)
+            if (p != null)
             {
-                Person person = _context.Person.Where(temp => temp.Id ==c.Id).FirstOrDefault();
-                person.Id = c.Id;
-                person.FirstName = c.FirstName;
-                person.LastName = c.LastName;
-                person.EmailId = c.EmailId;
-                person.CityId = c.CityId;
-                person.DOB = c.DOB;
-                person.Gender = c.Gender;
-                person.Active = c.Active;
-                person.PhotoUrl = c.PhotoUrl;
-                _context.SaveChanges();
+                // Person person = _context.Person.Where(temp => temp.Id ==c.Id).FirstOrDefault();
+                //person.Id = c.Id;
+                //person.FirstName = c.FirstName;
+                //person.LastName = c.LastName;
+                //person.EmailId = c.EmailId;
+                //person.CityId = c.CityId;
+                //person.DOB = c.DOB;
+                //person.Gender = c.Gender;
+                //person.Active = c.Active;
+                //person.PhotoUrl = c.PhotoUrl;
+                //_context.SaveChanges();
+                _context.Database.ExecuteSqlRaw("UpdatePersonData {0},{1},{2},{3},{4},{5},{6},{7},{8}",
+            
+               p.Id,
+               p.FirstName,
+               p.LastName,
+               p.EmailId,
+               p.CityId,
+               p.DOB,
+               p.Gender,
+               p.Active,
+               p.PhotoUrl);
                 return true;
             }
             return false;
 
+        }
+
+        public enum Operation
+        {
+            Insert = 1 ,
+           Update = 2
         }
 
     }

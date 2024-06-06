@@ -26,7 +26,7 @@ namespace CRUD_Operations_Core.Controllers
             if (SortColumn == null) { SortColumn = "Id"; }
             ViewBag.SortColumn = SortColumn;
             ViewBag.Iconclass = Iconclass;
-            List<Person> person = _personRepository.GetPersons(SortColumn, Iconclass, PageNo);
+            List<PersonDetail> person = _personRepository.GetPersons(SortColumn, Iconclass, PageNo);
           
             
             //#region Paging Logic
@@ -48,7 +48,7 @@ namespace CRUD_Operations_Core.Controllers
 
             if (search == null) { search = ""; }
             ViewBag.value = search;
-            List<Person> person = _personRepository.SearchPerson(search);
+            List<PersonDetail> person = _personRepository.SearchPerson(search);
             return View("Index", person);
         }
 

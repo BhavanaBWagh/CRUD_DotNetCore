@@ -5,6 +5,7 @@ using System.Xml.Linq;
 
 namespace CRUD_Operations_Core.Models
 {
+    //
     public class Person
     {
         [Key]
@@ -42,7 +43,7 @@ namespace CRUD_Operations_Core.Models
         public DateTime DOB { get; set; }
 
 
-        
+
         [MaxLength(10)]
         [Display(Name = ("Gender"))]
         [Required(ErrorMessage = "Please select Gender")]
@@ -55,7 +56,7 @@ namespace CRUD_Operations_Core.Models
 
         [Required(ErrorMessage = "Please choose the Customer Photo")]
         [Column(TypeName = "varchar(MAX)")]
-      
+
         public string PhotoUrl { get; set; }
 
 
@@ -67,4 +68,5 @@ namespace CRUD_Operations_Core.Models
         public string BreifPhotoName { get; set; }
 
     }
+
 }

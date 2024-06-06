@@ -1,0 +1,115 @@
+﻿
+<div class="block-heading mb-3">
+    <h2>Upload Excel File</h2>
+</div>
+
+<div class="row">
+<div class="col-9">
+        <button id="btnDownloadExcel" class="btn btn-success" style="background-color:#59aeae; border-color:#59aeae; color:white; width:230px; " onclick="GenerateAndDownloadExcel()">Download Excel With Data</button>
+</div>
+<div class="col-3">
+        <button id="btnDownloadExcel" class="btn btn-success" style="background-color:#59aeae; border-color:#59aeae; color:white; width:250px; " onclick="GenerateEmptyExcel()">Download Empty Excel Format</button>
+</div>
+</div>
+
+<form method="post" enctype="multipart/form-data" asp-controller="Student" asp-action="UploadExcel">
+
+    <label style="margin-left:16%; font-weight:bold; font-size:20px" for="customFile" class="mt-3">Upload File</label>
+    <div class="row mt-1" style="margin-left:15%;">
+          <div class="mb-1 col-7">
+            <input class="form-control" type="file" id="input" name="file" accept=".xls,.xlsx,.ods">
+           </div>
+           <div class="col-5">
+            <button class="btn btn-success" type="submit" style="background-color:#59aeae; border-color:#59aeae; color:white; width:100px; ">Upload</button>
+            </div>
+    </div>
+</form>
+<button onclick="GenerateExcelTable()" class="btn btn-success mt-2 mb-2" style="background-color:#59aeae; border-color:#59aeae; color:white; width:190px; ">Load Excel Data</button>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-info">@ViewBag.Message</div>
+}
+
+<div id="tabledata">
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+    function GenerateExcelTable() {
+            $('#tabledata').load("/Student/ExcelTableDataPartial");
+    }
+    //function Init(){
+    //    OStudent =NewStudentObj();
+    //    $("#btnDownloadExcel").click(function(){
+    //        GenerateAndDownloadExcel();
+    //    });
+
+    
+
+        function GenerateAndDownloadExcel(){
+            var StudentId = 0,
+            name = "";
+
+            $.ajax({
+                url: "../Student/GenerateAndDownloadExcel?studentid=" + StudentId + "&name=" + name,
+                type:"GET",
+                success:function(result){
+                    ExcelFromBase64("Student List Excel.xlsx",result);
+                },
+                error: function (result) {
+
+                },
+                
+            });
+        }
+    function GenerateEmptyExcel() {
+        var StudentId = 0,
+            name = "";
+
+        $.ajax({
+            url: "../Student/GenerateEmptyExcel",
+            type: "GET",
+            success: function (result) {
+                ExcelFromBase64("Student List Excel.xlsx", result);
+            },
+            error: function (result) {
+
+            },
+
+        });
+    }
+        function ExcelFromBase64(fileName,byteBase64)
+        {
+            var link = document.createElement('a');
+            link.download = fileName;
+            link.href = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64, '+byteBase64;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+
+
+    //function UploadExcel() {
+
+    //    var fileName = $("#input").val().split("\\").pop();
+
+    //    $.ajax({
+    //        url: "../Student/ReadDataFromExcel?filePath="+fileName,
+    //        type: "GET",
+    //        success: function (result) {
+    //           alert("Successfully Saved.");
+    //        },
+    //        error: function (result) {
+    //            alert("Error Found.");
+    //        },
+
+    //    });
+    //}
+    
+</script>
